@@ -1,20 +1,25 @@
-import { createAction, ActionFunctions } from 'redux-actions'
+import { createAction } from 'redux-actions'
+import { Action } from 'redux'
 
-export enum CoolActions {
+export enum CoolActionsEnum {
   COOL_ACTION = 'COOL_ACTION',
   SOMETHING_ELSE = 'SOMETHING_ELSE',
+  NO_PAYLOAD_ACTION = 'NO_PAYLOAD_ACTION',
 }
 
 interface CoolPayload {
   wowsa: boolean
 }
 
-export const coolAction: ActionFunctions<CoolPayload> = createAction<CoolPayload>(CoolActions.COOL_ACTION)
-
 interface SomethingElsePayload {
   whatever: string
 }
 
-export const somethingElse: ActionFunctions<SomethingElsePayload> = createAction<SomethingElsePayload>(
-  CoolActions.SOMETHING_ELSE,
-)
+export type CoolActions =
+  | Action<CoolActionsEnum.COOL_ACTION> & Payload<CoolPayload>
+  | Action<CoolActionsEnum.SOMETHING_ELSE> & Payload<SomethingElsePayload>
+  | Action<CoolActionsEnum.NO_PAYLOAD_ACTION>
+
+export const coolAction = createAction<CoolPayload>(CoolActionsEnum.COOL_ACTION)
+export const somethingElse = createAction<SomethingElsePayload>(CoolActionsEnum.SOMETHING_ELSE)
+export const noPayloadAction = createAction<SomethingElsePayload>(CoolActionsEnum.SOMETHING_ELSE)

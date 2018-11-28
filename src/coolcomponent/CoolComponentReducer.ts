@@ -1,5 +1,4 @@
-import { CoolActions } from './CoolComponentActions'
-import { Action } from 'redux'
+import { CoolActions, CoolActionsEnum } from './CoolComponentActions'
 
 export interface CoolComponentState {
   paused: boolean
@@ -15,15 +14,18 @@ const initialCoolComponentState = {
 
 const controlPanelReducer = (
   state: CoolComponentState = initialCoolComponentState,
-  action: Action<CoolActions>,
+  action: CoolActions,
 ): CoolComponentState => {
   switch (action.type) {
-    case CoolActions.SOMETHING_ELSE:
-      console.log('Cool action dispathed')
+    case CoolActionsEnum.SOMETHING_ELSE: {
       return { ...state, debug: true }
-    case CoolActions.COOL_ACTION:
-      console.log('Something else dispathed')
+    }
+    case CoolActionsEnum.COOL_ACTION: {
       return { ...state, someStringValue: 'can only be string' }
+    }
+    case CoolActionsEnum.NO_PAYLOAD_ACTION: {
+      return state;
+    }
     default:
       return state
   }
